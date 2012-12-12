@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/new/Files">
+        <file>Files/board1_defect.JPG</file>
+        <file>Files/board1_fautless.jpg</file>
+        <file>Files/board2_defect.JPG</file>
+        <file>Files/board2_fautless.jpg</file>
+        <file>Files/board3_defect.jpg</file>
+        <file>Files/board3_fault.JPG</file>
+    </qresource>
+</RCC>

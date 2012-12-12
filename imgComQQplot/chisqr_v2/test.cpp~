@@ -1,0 +1,37 @@
+#include <imsl.h>
+ 
+class ChiSquaredTest
+{
+private:
+    int     m_nObservations, m_nCategories;
+public:
+    float   m_chi_squared;
+    ChiSquaredTest(int nObservations, int nCategories);
+    float   test(CdfFunction *Cdf, float *x);
+};
+ 
+static float local_function(float x, void *data)
+{
+    CdfFunction *Cdf = (CdfFunction*)data;
+    return Cdf->cdf(x);
+}
+ChiSquaredTest:: ChiSquaredTest (int nObservations, int nCategories)
+{
+    m_nObservations = nObservations;
+    m_nCategories = nCategories;
+}
+ 
+float ChiSquaredTest::test(CdfFunction *Cdf, float *x)
+{
+    float   result;
+    result = imsls_f_chi_squared_test(
+                     NULL, m_nObservations, m_nCategories, x,
+        IMSLS_FCN_W_DATA, local_function, Cdf,
+        IMSLS_CHI_SQUARED, &m_chi_squared,
+        0);
+    if (imsls_error_type() >= 3)
+    {
+        throw imsls_error_message();
+    }
+    return result;
+}
